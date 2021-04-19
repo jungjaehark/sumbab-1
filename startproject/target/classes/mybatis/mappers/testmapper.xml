@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.namxjung.startproject">
+
+	<!-- selectAll은 해당하는 NUM값에 따른 데이터 전체 출력 -->
+	<select id="selectAll" resultType="org.namxjung.startproject.persistence.TestVo">
+		SELECT * FROM STORE
+	</select>
+	
+	<select id="select" parameterType="int" resultType="org.namxjung.startproject.persistence.TestVo">
+		SELECT address FROM store WHERE store_num = #{store_num}
+	</select>
+	
+	</mapper>
