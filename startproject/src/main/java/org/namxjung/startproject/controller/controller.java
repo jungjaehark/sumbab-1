@@ -1,7 +1,16 @@
 package org.namxjung.startproject.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
+import org.namxjung.startproject.persistence.ReviewVo;
+import org.namxjung.startproject.persistence.TestDao;
 import org.namxjung.startproject.persistence.TestVo;
 import org.namxjung.startproject.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,23 +19,28 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class controller {
 	@Autowired
 	private TestService myTestService;
-
-	public controller(TestService myTestService) {
+	@Autowired
+	private TestDao mytestDao;
+	
+	public controller(TestService myTestService, TestDao mytestDao) {
 		super();
 		this.myTestService = myTestService;
+		this.mytestDao = mytestDao;
 	}
-			
+	
 	@RequestMapping(value = "main")
 	public String mainController() {
 		return "main";
 		
 	}
 	
+	//list jsp에서는 번호와 이름만꺼낼거임 테스트용도
 	@RequestMapping(value="/list",method = RequestMethod.GET)
 	public String list(Model model) {
 		List<TestVo> list = myTestService.list();
@@ -35,10 +49,18 @@ public class controller {
 		return "list";
 	}
 	
-	@RequestMapping(value = "map2/{store_num}", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "board/{store_num}", method = RequestMethod.GET)
 	public String map2Controller(Model model, @PathVariable int store_num) {
-		model.addAttribute("TestVo", myTestService.read(store_num));
-		return "map2";
+		TestVo storelist = myTestService.readStore(store_num);
+		model.addAttribute("storelist", storelist);
+		
+		//==========================================================================
+		ReviewVo Reviewlist = myTestService.Reviewlist(store_num);
+		model.addAttribute("Reviewlist", Reviewlist);
+		System.out.println(Reviewlist);
+		
+		return "board";
 		
 	}
 

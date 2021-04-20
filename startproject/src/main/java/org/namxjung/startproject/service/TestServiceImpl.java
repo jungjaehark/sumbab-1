@@ -2,6 +2,7 @@ package org.namxjung.startproject.service;
 
 import java.util.List;
 
+import org.namxjung.startproject.persistence.ReviewVo;
 import org.namxjung.startproject.persistence.TestDao;
 import org.namxjung.startproject.persistence.TestVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,18 @@ public class TestServiceImpl implements TestService {
 		return myTestDao.selectAll();
 	}
 
+
 	@Override
-	public TestVo read(int store_num) {
-		return myTestDao.select(store_num);
+	public TestVo readStore(int store_num) {
+		return myTestDao.selectOne(store_num);
 	}
+
+	@Override
+	public ReviewVo Reviewlist(int store_num) {
+		return myTestDao.selectReview(store_num);
+	}
+
+
 	
 
 }

@@ -16,18 +16,26 @@ public class TestDaomybatisImpl implements TestDao {
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
-	
-
+		
 	@Override
 	public List<TestVo> selectAll() {
 		return sqlSession.selectList("selectAll");
 	}
 
+	@Override
+	public TestVo selectOne(int store_num) {
+		return sqlSession.selectOne("selectOne", store_num);
+	}
+
+
+//==============================================================================
 
 	@Override
-	public TestVo select(int store_num) {
-		TestVo vo = (TestVo) sqlSession.selectOne("select", store_num);
-		return vo;
+	public ReviewVo selectReview(int store_num) {
+		return sqlSession.selectOne("selectReview", store_num);
 	}
+
+
+
 
 }

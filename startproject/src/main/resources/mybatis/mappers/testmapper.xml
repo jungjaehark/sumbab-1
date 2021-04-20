@@ -1,15 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.namxjung.startproject">
 
 	<!-- selectAll은 해당하는 NUM값에 따른 데이터 전체 출력 -->
-	<select id="selectAll" resultType="org.namxjung.startproject.persistence.TestVo">
+	<select id="selectAll"
+		resultType="org.namxjung.startproject.persistence.TestVo">
 		SELECT * FROM STORE
 	</select>
-	
-	<select id="select" parameterType="int" resultType="org.namxjung.startproject.persistence.TestVo">
-		SELECT address FROM store WHERE store_num = #{store_num}
+
+	<select id="selectOne" parameterType="Integer"
+		resultType="org.namxjung.startproject.persistence.TestVo">
+		SELECT name, address, phone, menu, time, etc, count, picture FROM store WHERE store_num = #{store_num,jdbcType=VARCHAR}
 	</select>
-	
-	</mapper>
+
+
+	<!-- =================================================== -->
+	<!-- 리뷰 테이블 부분 -->
+	<select id="selectReview" parameterType="Integer"
+		resultType="org.namxjung.startproject.persistence.ReviewVo">
+			SELECT id, star, content, regdate FROM review WHERE store_num = #{store_num,jdbcType=VARCHAR}
+	</select>
+
+</mapper>
