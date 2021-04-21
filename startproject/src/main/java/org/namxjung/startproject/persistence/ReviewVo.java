@@ -7,13 +7,15 @@ public class ReviewVo {
 	private String star;
 	private Date regdate;
 	private String content;
+	private String picture;
 	
-	public ReviewVo(String id, String star, Date regdate, String content) {
+	public ReviewVo(String id, String star, Date regdate, String content, String picture) {
 		super();
 		this.id = id;
 		this.star = star;
 		this.regdate = regdate;
 		this.content = content;
+		this.picture = picture;
 	}
 
 	public ReviewVo() {}
@@ -48,6 +50,14 @@ public class ReviewVo {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 
 	@Override

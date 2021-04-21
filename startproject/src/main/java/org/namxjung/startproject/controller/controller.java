@@ -1,11 +1,7 @@
 package org.namxjung.startproject.controller;
 
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 
 import org.namxjung.startproject.persistence.TestDao;
 import org.namxjung.startproject.persistence.TestVo;
@@ -53,7 +49,7 @@ public class controller {
 		model.addAttribute("storelist", storelist);
 		
 		//==========================================================================
-		List<HashMap<String, Object>> Reviewlist = mytestDao.selectReviews(store_num);
+		List<Map<String, Object>> Reviewlist = mytestDao.selectReviews(store_num);
 		model.addAttribute("Reviewlist", Reviewlist);
 		System.out.println(Reviewlist);
 		

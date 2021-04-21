@@ -18,16 +18,16 @@
 
 	<!-- =================================================== -->
 	<!-- 리뷰 테이블 부분 -->
-	
 	<resultMap type="org.namxjung.startproject.persistence.ReviewVo" id="ReviewMap">
 		<id column="id" property="id" />
 		<id column="star" property="star" />
 		<id column="content" property="content" />
 		<id column="regdate" property="regdate" />
+		<id column="picture" property="picture" />
 	</resultMap>
-	
+
 	<select id="selectReviews" parameterType = "Integer" resultMap="ReviewMap">
-		SELECT id, star, content, regdate FROM review WHERE store_num =
+		SELECT id, star, content, regdate, picture FROM review WHERE store_num =
 		#{store_num,jdbcType=VARCHAR}
 	</select>
 

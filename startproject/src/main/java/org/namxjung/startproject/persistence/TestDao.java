@@ -13,7 +13,7 @@ public interface TestDao {
 	
 	//==================================================================================================================
 	//리뷰 테이블에서 가져올것들
-	List<HashMap<String, Object>> selectReviews(int store_num);
+	List<Map<String, Object>> selectReviews(int store_num);
 
 	
 	

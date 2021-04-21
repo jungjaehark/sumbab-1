@@ -29,13 +29,9 @@ th, td {
 	<img src="${storelist.picture}"
 		style="width: 70%; height: 250px; float: center;">
 
-
-
-
-
 	<h1>${storelist.name}<br>
 	</h1>
-	조회수:${storelist.count}&nbsp;리뷰수:&nbsp;평균별점:
+	조회수:${storelist.count}
 	<br>
 
 	<table id="storeInfo">
@@ -85,12 +81,14 @@ th, td {
 			</tr>
 			<tr>
 				<th>리뷰내용:</th>
-				<td width="500" style="word-break: break-all">&nbsp;${Reviewlist.content}</td>
+				<td width="500" style="word-break: break-all">
+				<img src="‪C:\storeimages\defaultimiage.PNG"><br>
+				${Reviewlist.content}</td>
 			</tr>
 		</table>
 	</c:forEach>
 	<tr id='addbtn'>
-		<td colspan="5"><divclass="btns"> <a
+		<td colspan="5"><div class="btns"> <a
 				href="javascript:moreList();" class="btn btn-primary">리뷰 더보기</a>
 			</div></td>
 	</tr>
