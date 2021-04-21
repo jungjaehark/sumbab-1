@@ -22,9 +22,20 @@ table, th, td {
 th, td {
 	padding: 5px
 }
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+.big-box {
+	width: 100%;
+	background-color: gray;
+	height: 100vh;
+	border-top: 1px solid black;
+}
 </style>
 </head>
-
 <body>
 	<img src="${storelist.picture}"
 		style="width: 70%; height: 250px; float: center;">
@@ -61,73 +72,46 @@ th, td {
 	<input type="button" action="#" value="예약하기">
 
 
-
 	<h1>
 		리뷰목록<br>
 	</h1>
-	<c:forEach items="${Reviewlist}" var="Reviewlist">
-		<table id="reviewInfo">
-			<tr>
-				<th>작성자:</th>
-				<td width="500" style="word-break: break-all">&nbsp;${Reviewlist.id}</td>
-			</tr>
-			<tr>
-				<th>별점:</th>
-				<td width="500" style="word-break: break-all">&nbsp;${Reviewlist.star}</td>
-			</tr>
-			<tr>
-				<th>작성일:</th>
-				<td width="500" style="word-break: break-all">&nbsp;${Reviewlist.regdate}</td>
-			</tr>
-			<tr>
-				<th>리뷰내용:</th>
-				<td width="500" style="word-break: break-all">
-				<img src="‪C:\storeimages\defaultimiage.PNG"><br>
-				${Reviewlist.content}</td>
-			</tr>
-		</table>
-	</c:forEach>
-	<tr id='addbtn'>
-		<td colspan="5"><div class="btns"> <a
-				href="javascript:moreList();" class="btn btn-primary">리뷰 더보기</a>
-			</div></td>
-	</tr>
+	<table id="data-table" class="table table-striped table-bordered">
+		<c:forEach var="i" items="${Reviewlist}" varStatus="status">
+					<tr>
+						<td>작성자:${i.id }</td>
+						<td>평균별점:${i.star }</td>
+						<td>등록일:${i.regdate }</td>
+						<td>리뷰내용:${i.content }</td>
+					</tr>
+		</c:forEach>
 
-	<script>
-		function moreList() {
-			$
-					.ajax({
-						url : "/admin/jsonlist",
-						type : "POST",
-						cache : false,
-						dataType : 'json',
-						data : "conectType=" + conectType + "&eDate=" + eDate
-								+ "&sDate=" + sDate + "&codeId=" + codeId
-								+ "&limit=" + limit,
-						success : function(data) {
-							//console.log(data);
-							var content = "";
-							for (var i = 0; i < data.hashMapList.length; i++) {
-								content += "<tr>" + "<td>"
-										+ data.hashMapList[i].area + "</td>"
-										+ "<td>" + data.hashMapList[i].name
-										+ "</td>" + "<td>"
-										+ data.hashMapList[i].gubun + "</td>"
-										+ "<td>" + data.hashMapList[i].cnt
-										+ "</td>" + "</tr>";
-							}
-							content += "<tr id='addbtn'><td colspan='5'><div class='btns'><a href='javascript:moreList();' class='btn'>더보기</a></div>  </td></tr>";
-							$('#addbtn').remove();//remove btn
-							$(content).appendTo("#reviewInfo");
-						},
-						error : function(request, status, error) {
-							alert("code:" + request.status + "\n" + "message:"
-									+ request.responseText + "\n" + "error:"
-									+ error);
-						}
-					});
-		};
-	</script>
+		<tbody id="my-tbody" />
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	<div id="map" class="topcorner"

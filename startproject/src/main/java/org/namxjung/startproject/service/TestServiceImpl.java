@@ -1,6 +1,8 @@
 package org.namxjung.startproject.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.namxjung.startproject.persistence.ReviewVo;
 import org.namxjung.startproject.persistence.TestDao;
@@ -22,14 +24,9 @@ public class TestServiceImpl implements TestService {
 		return myTestDao.selectAll();
 	}
 
-
 	@Override
 	public TestVo readStore(int store_num) {
 		return myTestDao.selectOne(store_num);
-	}
-
-
-
-	
+	}	
 
 }

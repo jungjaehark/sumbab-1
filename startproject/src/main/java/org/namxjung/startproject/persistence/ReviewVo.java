@@ -8,6 +8,7 @@ public class ReviewVo {
 	private Date regdate;
 	private String content;
 	private String picture;
+
 	
 	public ReviewVo(String id, String star, Date regdate, String content, String picture) {
 		super();

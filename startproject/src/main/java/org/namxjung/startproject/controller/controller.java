@@ -44,7 +44,7 @@ public class controller {
 	
 	
 	@RequestMapping(value = "board/{store_num}", method = RequestMethod.GET)
-	public String map2Controller(Model model, @PathVariable int store_num) {
+	public String boardController(Model model, @PathVariable int store_num) {
 		TestVo storelist = myTestService.readStore(store_num);
 		model.addAttribute("storelist", storelist);
 		
@@ -53,8 +53,11 @@ public class controller {
 		model.addAttribute("Reviewlist", Reviewlist);
 		System.out.println(Reviewlist);
 		
-		return "board";
+		//===========================================================================
+		List<TestVo> list = myTestService.list();
+		model.addAttribute("list", list);
 		
+		return "board";	
 	}
 
 }

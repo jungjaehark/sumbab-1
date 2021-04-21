@@ -1,6 +1,7 @@
 package org.namxjung.startproject.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.namxjung.startproject.persistence.ReviewVo;
 import org.namxjung.startproject.persistence.TestVo;
