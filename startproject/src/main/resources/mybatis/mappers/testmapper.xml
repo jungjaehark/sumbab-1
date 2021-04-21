@@ -11,15 +11,24 @@
 
 	<select id="selectOne" parameterType="Integer"
 		resultType="org.namxjung.startproject.persistence.TestVo">
-		SELECT name, address, phone, menu, time, etc, count, picture FROM store WHERE store_num = #{store_num,jdbcType=VARCHAR}
+		SELECT name, address, phone, menu, time, etc, count,
+		picture FROM store WHERE store_num = #{store_num,jdbcType=VARCHAR}
 	</select>
 
 
 	<!-- =================================================== -->
 	<!-- 리뷰 테이블 부분 -->
-	<select id="selectReview" parameterType="Integer"
-		resultType="org.namxjung.startproject.persistence.ReviewVo">
-			SELECT id, star, content, regdate FROM review WHERE store_num = #{store_num,jdbcType=VARCHAR}
+	
+	<resultMap type="org.namxjung.startproject.persistence.ReviewVo" id="ReviewMap">
+		<id column="id" property="id" />
+		<id column="star" property="star" />
+		<id column="content" property="content" />
+		<id column="regdate" property="regdate" />
+	</resultMap>
+	
+	<select id="selectReviews" parameterType = "Integer" resultMap="ReviewMap">
+		SELECT id, star, content, regdate FROM review WHERE store_num =
+		#{store_num,jdbcType=VARCHAR}
 	</select>
 
 </mapper>

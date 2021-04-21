@@ -1,6 +1,8 @@
 package org.namxjung.startproject.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface TestDao {
 	
@@ -11,7 +13,7 @@ public interface TestDao {
 	
 	//==================================================================================================================
 	//리뷰 테이블에서 가져올것들
-	public ReviewVo selectReview(int store_num);
+	List<HashMap<String, Object>> selectReviews(int store_num);
 
 	
 	

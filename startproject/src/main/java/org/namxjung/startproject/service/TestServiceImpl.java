@@ -28,10 +28,6 @@ public class TestServiceImpl implements TestService {
 		return myTestDao.selectOne(store_num);
 	}
 
-	@Override
-	public ReviewVo Reviewlist(int store_num) {
-		return myTestDao.selectReview(store_num);
-	}
 
 
 	

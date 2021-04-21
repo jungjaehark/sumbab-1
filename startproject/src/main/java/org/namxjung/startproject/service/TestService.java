@@ -12,8 +12,6 @@ public interface TestService {
 	
 	public TestVo readStore(int store_num);
 	
-	public ReviewVo Reviewlist(int store_num);
-	
 
 
 }

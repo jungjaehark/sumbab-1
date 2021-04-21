@@ -1,15 +1,12 @@
 package org.namxjung.startproject.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.ArrayList;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 
-import org.namxjung.startproject.persistence.ReviewVo;
+
 import org.namxjung.startproject.persistence.TestDao;
 import org.namxjung.startproject.persistence.TestVo;
 import org.namxjung.startproject.service.TestService;
@@ -19,7 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class controller {
@@ -56,7 +53,7 @@ public class controller {
 		model.addAttribute("storelist", storelist);
 		
 		//==========================================================================
-		ReviewVo Reviewlist = myTestService.Reviewlist(store_num);
+		List<HashMap<String, Object>> Reviewlist = mytestDao.selectReviews(store_num);
 		model.addAttribute("Reviewlist", Reviewlist);
 		System.out.println(Reviewlist);
 		

@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>상세화면페이지</title>
 <%@ include file="/WEB-INF/views/shareHead.jsp"%>
-</head>
 
 <style type="text/css">
 .topcorner {
@@ -14,45 +13,127 @@
 	top: 0;
 	right: 0;
 }
+
+table, th, td {
+	border-collapse: collapse;
+	border: 1px solid black;
+}
+
+th, td {
+	padding: 5px
+}
 </style>
+</head>
 
 <body>
+	<img src="${storelist.picture}"
+		style="width: 70%; height: 250px; float: center;">
 
-
-	
-		<img src="${storelist.picture}" style="width: 40%; height: 250px; float: left;">
 
 
 
 
 	<h1>${storelist.name}<br>
 	</h1>
-	조회수:${storelist.count}&nbsp;리뷰수:&nbsp;평균별점:${Reviewlist.star}
+	조회수:${storelist.count}&nbsp;리뷰수:&nbsp;평균별점:
 	<br>
 
+	<table id="storeInfo">
+		<tr>
+			<th>위치:</th>
+			<td style="word-break: break-all">&nbsp;${storelist.address}</td>
+		</tr>
+		<tr>
+			<th>전화번호:</th>
+			<td style="word-break: break-all">&nbsp;${storelist.phone}</td>
+		</tr>
+		<tr>
+			<th>메뉴:</th>
+			<td style="word-break: break-all">&nbsp;${storelist.menu}</td>
+		</tr>
+		<tr>
+			<th>영업시간:</th>
+			<td style="word-break: break-all">&nbsp;${storelist.time}</td>
+		</tr>
+		<tr>
+			<th>특이사항:</th>
+			<td style="word-break: break-all">&nbsp;${storelist.etc}</td>
+		</tr>
+	</table>
 
-
-	<p>
-		위치:&nbsp;${storelist.address}<br> 전화번호:&nbsp;${storelist.phone}<br>
-		메뉴:&nbsp;${storelist.menu}<br> 영업시간:&nbsp;${storelist.time}<br>
-		특이사항:&nbsp;${storelist.etc}<br>
-	</p>
 	<input type="button" action="#" value="보관함에담기">
 	<input type="button" action="#" value="예약하기">
 
 
-	<p>
+
 	<h1>
 		리뷰목록<br>
 	</h1>
-	작성자:${Reviewlist.id}&nbsp;별점:${Reviewlist.star}&nbsp;작성일:${Reviewlist.regdate}
-	<br> 리뷰:${Reviewlist.content}
-	</p>
+	<c:forEach items="${Reviewlist}" var="Reviewlist">
+		<table id="reviewInfo">
+			<tr>
+				<th>작성자:</th>
+				<td width="500" style="word-break: break-all">&nbsp;${Reviewlist.id}</td>
+			</tr>
+			<tr>
+				<th>별점:</th>
+				<td width="500" style="word-break: break-all">&nbsp;${Reviewlist.star}</td>
+			</tr>
+			<tr>
+				<th>작성일:</th>
+				<td width="500" style="word-break: break-all">&nbsp;${Reviewlist.regdate}</td>
+			</tr>
+			<tr>
+				<th>리뷰내용:</th>
+				<td width="500" style="word-break: break-all">&nbsp;${Reviewlist.content}</td>
+			</tr>
+		</table>
+	</c:forEach>
+	<tr id='addbtn'>
+		<td colspan="5"><divclass="btns"> <a
+				href="javascript:moreList();" class="btn btn-primary">리뷰 더보기</a>
+			</div></td>
+	</tr>
+
+	<script>
+		function moreList() {
+			$
+					.ajax({
+						url : "/admin/jsonlist",
+						type : "POST",
+						cache : false,
+						dataType : 'json',
+						data : "conectType=" + conectType + "&eDate=" + eDate
+								+ "&sDate=" + sDate + "&codeId=" + codeId
+								+ "&limit=" + limit,
+						success : function(data) {
+							//console.log(data);
+							var content = "";
+							for (var i = 0; i < data.hashMapList.length; i++) {
+								content += "<tr>" + "<td>"
+										+ data.hashMapList[i].area + "</td>"
+										+ "<td>" + data.hashMapList[i].name
+										+ "</td>" + "<td>"
+										+ data.hashMapList[i].gubun + "</td>"
+										+ "<td>" + data.hashMapList[i].cnt
+										+ "</td>" + "</tr>";
+							}
+							content += "<tr id='addbtn'><td colspan='5'><div class='btns'><a href='javascript:moreList();' class='btn'>더보기</a></div>  </td></tr>";
+							$('#addbtn').remove();//remove btn
+							$(content).appendTo("#reviewInfo");
+						},
+						error : function(request, status, error) {
+							alert("code:" + request.status + "\n" + "message:"
+									+ request.responseText + "\n" + "error:"
+									+ error);
+						}
+					});
+		};
+	</script>
 
 
 	<div id="map" class="topcorner"
-		style="width: 30%; height: 250px; float: right;"></div>
-
+		style="width: 30%; height: 250px; float: left;"></div>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c771ec3c7832fcdda8a8784dd25a4cb4&libraries=services"></script>
 	<script>
