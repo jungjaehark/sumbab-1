@@ -15,7 +15,7 @@
 		 -->
 	<select id="selectOne" parameterType="Integer"
 		resultType="org.namxjung.startproject.persistence.TestVo">
-		SELECT count(*) over() as totalcount, name, address, phone,
+		SELECT count(*) over() as totalcount, name, address, citycode, districtcode, phone,
 		menu, time, etc, count,
 		picture FROM store WHERE store_num =
 		#{store_num,jdbcType=VARCHAR}

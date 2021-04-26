@@ -6,6 +6,8 @@ public class TestVo {
 	private String classify;
 	private String name;
 	private String address;
+	private String citycode;
+	private String districtcode;
 	private String phone;
 	private String menu;
 	private String time;
@@ -23,14 +25,18 @@ public class TestVo {
 		this.name = name;
 	}
 
-	public TestVo(int store_num, String id, String classify, String name, String address, String phone, String menu,
-			String time, int reserving, String etc, int count, String picture) {
+
+	public TestVo(int store_num, String id, String classify, String name, String address, String citycode,
+			String districtcode, String phone, String menu, String time, int reserving, String etc, int count,
+			String picture) {
 		super();
 		this.store_num = store_num;
 		this.id = id;
 		this.classify = classify;
 		this.name = name;
 		this.address = address;
+		this.citycode = citycode;
+		this.districtcode = districtcode;
 		this.phone = phone;
 		this.menu = menu;
 		this.time = time;
@@ -78,6 +84,23 @@ public class TestVo {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	
+	public String getCitycode() {
+		return citycode;
+	}
+
+	public void setCitycode(String citycode) {
+		this.citycode = citycode;
+	}
+
+	public String getDistrictcode() {
+		return districtcode;
+	}
+
+	public void setDistrictcode(String districtcode) {
+		this.districtcode = districtcode;
 	}
 
 	public String getPhone() {

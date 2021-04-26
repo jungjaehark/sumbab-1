@@ -122,7 +122,7 @@ https://www.youtube.com/watch?v=oSd_r1fxwTg,https://www.youtube.com/watch?v=MABI
 				$(data).each(function(i, elem){
 					let img = $("<img>").attr("src", elem.picture != null ? elem.picture : "C:\storeimages\defaultimiage.PNG");
 					table
-						.append($("<tr>").append($("<th>").text("작성자")).append($("<td>", {text:elem.id}, function warning({text:elem.reviewNum})) {callFunction();}); )))
+						.append($("<tr>").append($("<th>").text("작성자")).append($("<td>", {text:elem.id}).append(atag.append($("<br>")))))
 						.append($("<tr>").append($("<th>").text("별점")).append($("<td>", {text:elem.star})))
 						.append($("<tr>").append($("<th>").text("작성일")).append($("<td>", {text:elem.regdate})))
 						.append($("<tr>")
@@ -141,9 +141,13 @@ https://www.youtube.com/watch?v=oSd_r1fxwTg,https://www.youtube.com/watch?v=MABI
 			}
 		});
 	}
-	function warning(reviewNum) {
-		alert("신고기능은 아직 미완성입니다."");
+	function warning(storeNum) {
+		alert(storeNum);
 	}
+	const atag = $("<a>");
+	atag.on('click', () => warning(1));
+	atag.attr("style", "float: right")
+	atag.button("신고하기");
 	</script>
 
 
