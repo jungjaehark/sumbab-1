@@ -13,9 +13,11 @@ public interface TestDao {
 	
 	//==================================================================================================================
 	//리뷰 테이블에서 가져올것들
-	List<Map<String, Object>> selectReviews(int store_num);
-
+	List<Map<String, Object>> selectReviews(int store_num, int page_num);
 	
+	List<Map<String, Object>> selectReviewsPaging(int store_num, int page_num);	
+	
+	int getReviewCount(int storeNum);
 	
 	//==================================================================================================================
 

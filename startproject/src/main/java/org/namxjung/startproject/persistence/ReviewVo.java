@@ -3,23 +3,21 @@ package org.namxjung.startproject.persistence;
 import java.util.Date;
 
 public class ReviewVo {
+	private String reviewNum;
 	private String id;
 	private String star;
 	private Date regdate;
 	private String content;
 	private String picture;
+	private String totalCount;
 
-	
-	public ReviewVo(String id, String star, Date regdate, String content, String picture) {
-		super();
-		this.id = id;
-		this.star = star;
-		this.regdate = regdate;
-		this.content = content;
-		this.picture = picture;
+	public String getReviewNum() {
+		return reviewNum;
 	}
 
-	public ReviewVo() {}
+	public void setReviewNum(String reviewNum) {
+		this.reviewNum = reviewNum;
+	}
 
 	public String getId() {
 		return id;
@@ -52,7 +50,7 @@ public class ReviewVo {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	public String getPicture() {
 		return picture;
 	}
@@ -61,13 +59,18 @@ public class ReviewVo {
 		this.picture = picture;
 	}
 
+	public String getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(String totalCount) {
+		this.totalCount = totalCount;
+	}
+
 	@Override
 	public String toString() {
-		return "ReviewVo [id=" + id + ", star=" + star + ", regdate=" + regdate + ", content=" + content + "]";
+		return "ReviewVo [reviewNum=" + reviewNum + ", id=" + id + ", star=" + star + ", regdate=" + regdate
+				+ ", content=" + content + ", picture=" + picture + ", totalCount=" + totalCount + "]";
 	}
-	
-	
-	
-	
-	
+
 }

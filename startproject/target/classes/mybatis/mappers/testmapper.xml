@@ -9,16 +9,24 @@
 		SELECT * FROM STORE
 	</select>
 
+	<!-- 새로운 개념으로 count(*) over(*) as totalcount 참고자료 https://annehouse.tistory.com/419 
+		참조 아래의 partition 부분까지 설명되있음
+		실제 데이터와 함께 해당 테이블의 전체 로우 컬럼을 쉽고 편리하게 추출할 수 있다.
+		 -->
 	<select id="selectOne" parameterType="Integer"
 		resultType="org.namxjung.startproject.persistence.TestVo">
-		SELECT name, address, phone, menu, time, etc, count,
-		picture FROM store WHERE store_num = #{store_num,jdbcType=VARCHAR}
+		SELECT count(*) over() as totalcount, name, address, phone,
+		menu, time, etc, count,
+		picture FROM store WHERE store_num =
+		#{store_num,jdbcType=VARCHAR}
 	</select>
 
 
 	<!-- =================================================== -->
 	<!-- 리뷰 테이블 부분 -->
-	<resultMap type="org.namxjung.startproject.persistence.ReviewVo" id="ReviewMap">
+	<resultMap
+		type="org.namxjung.startproject.persistence.ReviewVo" id="ReviewMap">
+		<id column="review_num" property="reviewNum" />
 		<id column="id" property="id" />
 		<id column="star" property="star" />
 		<id column="content" property="content" />
@@ -26,9 +34,59 @@
 		<id column="picture" property="picture" />
 	</resultMap>
 
-	<select id="selectReviews" parameterType = "Integer" resultMap="ReviewMap">
-		SELECT id, star, content, regdate, picture FROM review WHERE store_num =
-		#{store_num,jdbcType=VARCHAR}
+	<!-- List형 배열로 반환되기에 resultmap을 선언하고 아래에 resultMap = "ReviewMap"으로 설정 쿼리문에서 
+		COUNT(*)OVER(PARTITION BY 컬럼) 부분은 현재 Review 테이블에서는 store_num별로 그룹으로 이루어진 
+		review데이터값들을 나눌 기준점컬럼이없다....(ex.deptno나 여럿 기준점이 되는 컬럼설정가능) 그러므로 COUNT(*)OVER(PARTITION 
+		BY 컬럼)을 통해 그룹을 나누어봄 쿄쿄!! 사실상 파티션바이는 의미없음 오더바이라 해도 괜찮을듯 싶은데 테스트하기 귀찮다.-->
+	<select id="selectReviews" parameterType="map"
+		resultMap="ReviewMap">
+		SELECT *
+		FROM (SELECT ROW_NUMBER() OVER(PARTITION BY
+		STORE_NUM ORDER BY REVIEW_NUM)
+		RNUM
+		, REVIEW_NUM
+		, ID
+		, STAR
+		, CONTENT
+		,
+		REGDATE
+		, PICTURE
+		FROM REVIEW
+		WHERE STORE_NUM = #{store_num}
+		)
+		WHERE RNUM
+		BETWEEN #{startNum} AND #{endNum}
+	</select>
+
+	<!-- reviewCount를 굳이 하는이유? 전체 리뷰갯수를 알아낸후 나는 5단위로 페이징처리를 할것이다 그러므로 예를들어 전체 
+		리뷰가52개이면 페이징단위가 10개에 짜투리 개시물2개까지 총 11페이지생성가능하다는걸 알아내기위해 -->
+	<select id="reviewCount" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) AS CNT
+		FROM REVIEW
+		WHERE STORE_NUM =
+		#{store_num}
+	</select>
+
+
+	<select id="selectReviewsPaging" parameterType="map"
+		resultMap="ReviewMap">
+		SELECT *
+		FROM (SELECT ROW_NUMBER() OVER(PARTITION BY
+		STORE_NUM ORDER BY REVIEW_NUM)
+		RNUM
+		, REVIEW_NUM
+		, ID
+		, STAR
+		, CONTENT
+		,
+		REGDATE
+		, PICTURE
+		FROM REVIEW
+		WHERE STORE_NUM = #{store_num}
+		)
+		WHERE RNUM
+		BETWEEN #{startNum} AND #{endNum}
 	</select>
 
 </mapper>
