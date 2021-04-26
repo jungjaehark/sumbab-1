@@ -16,6 +16,12 @@
 	right: 0;
 }
 
+.bottomright {
+	position: absolute;
+	bottom: 100;
+	right: 0;
+}
+
 table, th, td {
 	border-collapse: collapse;
 	border: 1px solid black;
@@ -76,9 +82,10 @@ body {
 			<table class="reviewInfo">
 				<tr>
 					<th>작성자:</th>
-					<td width="500" style="word-break: break-all"><a
-						href="script:warning(${Reviewlist.reviewNum})"
-						style="float: right";>신고하기<br></a>&nbsp;${Reviewlist.id}</td>
+					<td width="500" style="word-break: break-all">&nbsp;${Reviewlist.id}<a
+						href==
+						"script:warning(${Reviewlist.reviewNum})" style="float: right"></a>신고하기<br>
+					</td>
 				</tr>
 				<tr>
 					<th>별점:</th>
@@ -98,20 +105,15 @@ body {
 		</c:forEach>
 	</div>
 
-
 	<c:forEach var="cnt" begin="1" end="${totalCount }" step="1">
 		<a href="javascript:goPaging(${storeNum}, ${cnt });">${cnt }</a>
 	</c:forEach>
-	<!-- foreach jstl로 데이터를 받으나 아래에 스크립트단에서 ajax로 요청을해 데이터가 들어갈예정 솔까 백프로 이해는안된다만 ajax에 
-	데이터를 넘길 위에 foreach 반복문은  폼이되어버린듯한 느낌으로 이해하고있다.. -->
 
-	<!-- 스크립트단에서의 ajax데이터 요청과 페이징 처리를할 위의 foreach에 값을 보내줄 제이쿼리형식의 데이터 폼이라고 말하는게 맞을랄까??
-https://www.youtube.com/watch?v=oSd_r1fxwTg,https://www.youtube.com/watch?v=MABIi9NLv_c등등 참고자료 제이쿼리 기본서사서 공부를 해야겠다 진짜 대가리가 아프다,,, -->
 	<script>
 	let num = 10;
 	function goPaging(storeNum, pageNo) {
 		$.ajax({
-			url:"/project/board2/" + storeNum + "/" + pageNo,
+			url:"/project/StoreView2/" + storeNum + "/" + pageNo,
 			type:"get",
 			dataType:"json",
 			success:function(data){
@@ -122,7 +124,7 @@ https://www.youtube.com/watch?v=oSd_r1fxwTg,https://www.youtube.com/watch?v=MABI
 				$(data).each(function(i, elem){
 					let img = $("<img>").attr("src", elem.picture != null ? elem.picture : "C:\storeimages\defaultimiage.PNG");
 					table
-						.append($("<tr>").append($("<th>").text("작성자")).append($("<td>", {text:elem.id}).append(atag.append($("<br>")))))
+						.append($("<tr>").append($("<th>").text("작성자")).append($("<td>", {text:elem.id})))
 						.append($("<tr>").append($("<th>").text("별점")).append($("<td>", {text:elem.star})))
 						.append($("<tr>").append($("<th>").text("작성일")).append($("<td>", {text:elem.regdate})))
 						.append($("<tr>")
@@ -150,6 +152,66 @@ https://www.youtube.com/watch?v=oSd_r1fxwTg,https://www.youtube.com/watch?v=MABI
 	atag.button("신고하기");
 	</script>
 
+	<div id="nbsCafeList"
+		class="bottomright">
+		<h1>
+			${storelist.name} 주변 카페<br>
+		</h1>
+		<c:forEach items="${nbsCafe}" var="nbsCafe">
+			<table class="nbsInfo">
+				<tr>
+					<th>위치:</th>
+					<td style="word-break: break-all">&nbsp;${nbsCafe.address}</td>
+				</tr>
+				<tr>
+					<th>전화번호:</th>
+					<td style="word-break: break-all">&nbsp;${nbsCafe.phone}</td>
+				</tr>
+				<tr>
+					<th>메뉴:</th>
+					<td style="word-break: break-all">&nbsp;${nbsCafe.menu}</td>
+				</tr>
+				<tr>
+					<th>영업시간:</th>
+					<td style="word-break: break-all">&nbsp;${nbsCafe.time}</td>
+				</tr>
+				<tr>
+					<th>특이사항:</th>
+					<td style="word-break: break-all">&nbsp;${nbsCafe.etc}</td>
+				</tr>
+			</table>
+		</c:forEach>
+	</div>
+	<h1>
+		${storelist.name} 주변 맛집<br>
+	</h1>
+	<div id="nbsRestaurantList">
+		<c:forEach items="${nbsRestaurant}" var="nbsRestaurant">
+			<table class="nbsInfo">
+				<tr>
+					<th>위치:</th>
+					<td style="word-break: break-all">&nbsp;${nbsRestaurant.address}</td>
+				</tr>
+				<tr>
+					<th>전화번호:</th>
+					<td style="word-break: break-all">&nbsp;${nbsRestaurant.phone}</td>
+				</tr>
+				<tr>
+					<th>메뉴:</th>
+					<td style="word-break: break-all">&nbsp;${nbsRestaurant.menu}</td>
+				</tr>
+				<tr>
+					<th>영업시간:</th>
+					<td style="word-break: break-all">&nbsp;${nbsRestaurant.time}</td>
+				</tr>
+				<tr>
+					<th>특이사항:</th>
+					<td style="word-break: break-all">&nbsp;$nbsRestaurant.etc}</td>
+				</tr>
+			</table>
+		</c:forEach>
+	</div>
+	s
 
 	<div id="map" class="topcorner"
 		style="width: 30%; height: 250px; float: left;"></div>

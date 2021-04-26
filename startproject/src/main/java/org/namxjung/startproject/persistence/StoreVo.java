@@ -1,6 +1,6 @@
 package org.namxjung.startproject.persistence;
 
-public class TestVo {
+public class StoreVo {
 	private int store_num;
 	private String id;
 	private String classify;
@@ -17,16 +17,16 @@ public class TestVo {
 	private String picture;
 
 	
-	public TestVo() {}
+	public StoreVo() {}
 	
-	public TestVo(int store_num, String name) {
+	public StoreVo(int store_num, String name) {
 		super();
 		this.store_num = store_num;
 		this.name = name;
 	}
 
 
-	public TestVo(int store_num, String id, String classify, String name, String address, String citycode,
+	public StoreVo(int store_num, String id, String classify, String name, String address, String citycode,
 			String districtcode, String phone, String menu, String time, int reserving, String etc, int count,
 			String picture) {
 		super();

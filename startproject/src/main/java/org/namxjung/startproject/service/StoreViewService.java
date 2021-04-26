@@ -4,14 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.namxjung.startproject.persistence.ReviewVo;
-import org.namxjung.startproject.persistence.TestVo;
+import org.namxjung.startproject.persistence.StoreVo;
 
-public interface TestService {
+public interface StoreViewService {
 
 	//전체조회 글과 이름만
-	public List<TestVo> list();
+	public List<StoreVo> list();
 	
-	public TestVo readStore(int store_num);
+	public StoreVo readStore(int store_num);
+	
+
 	
 
 

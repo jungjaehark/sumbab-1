@@ -2,28 +2,30 @@ package org.namxjung.startproject.service;
 
 import java.util.List;
 
-import org.namxjung.startproject.persistence.TestDao;
-import org.namxjung.startproject.persistence.TestVo;
+import org.namxjung.startproject.persistence.StoreDao;
+import org.namxjung.startproject.persistence.StoreVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TestServiceImpl implements TestService {
+public class StoreViewServiceImpl implements StoreViewService {
 	@Autowired
-	private TestDao myTestDao;
+	private StoreDao myTestDao;
 
-	public void setMyBoardDao(TestDao myTestDao) {
+	public void setMyBoardDao(StoreDao myTestDao) {
 		this.myTestDao = myTestDao;
 	}
 
-	public List<TestVo> list() {
+	public List<StoreVo> list() {
 		System.out.println("과욘?");
 		return myTestDao.selectAll();
 	}
 
 	@Override
-	public TestVo readStore(int store_num) {
+	public StoreVo readStore(int store_num) {
 		return myTestDao.selectOne(store_num);
 	}
+
+
 
 }
