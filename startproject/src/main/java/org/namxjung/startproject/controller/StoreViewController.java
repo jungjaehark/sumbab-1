@@ -24,12 +24,14 @@ public class StoreViewController {
 	@Autowired
 	private StoreDao myStoreDao;
 
+	//주입을 그냥 DAO까지 한번에 혹시몰라 떄려박았다,,,
 	public StoreViewController(StoreViewService myTestService, StoreDao mytestDao) {
 		super();
 		this.myStoreViewService = myTestService;
 		this.myStoreDao = mytestDao;
 	}
 
+	//쓸모없는놈.....
 	@RequestMapping(value = "main")
 	public String mainController() {
 		return "main";
@@ -72,22 +74,30 @@ public class StoreViewController {
 		return "StoreView";
 	}
 //===========================================================================================================================
+	/*ajax 데이터전송을 위한 컨트롤러 위와 같은 storeView url컨트롤러지만 위에는 정말 말그대로 StoreView를 보여주기위한 렌더링용 컨트롤러
+	 * ResponseBody가 붙었으니 ajax전송 컨트롤러 겠쥬,,,,,,,,
+	 * value 부분에서 애를 많이먹었는데 아무래도 ajax선언할때의 url과 형식을 맞추는게 맞는것같다,,,,
+	 */
+	
 	@RequestMapping(value = "StoreView2/{store_num}/{page_num}", method = RequestMethod.GET)
 	public @ResponseBody List<Map<String, String>> boardPaging(@PathVariable int store_num,
 			@PathVariable int page_num) {	
 		
 		List<Map<String, Object>> reviewList = myStoreDao.selectReviewsPaging(store_num, page_num);
+		System.out.println(page_num+"입니다");
 		int totalCount = myStoreDao.getReviewCount(store_num);
 		
 		System.out.println("totalCount = " + totalCount);
 		System.out.println(reviewList);
 		
+		//제일 문제의 부분.....오류가 결론적으로 ajax에 전달될 List<Map<String, String>>를 미리만들어주고
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		
+		//물론 json오류 안나게 String으로다가...
 		Map<String, String> map = null;
-		
 		ReviewVo vo = null;
-		
+		//ajax에 전달된 list에다가 값넣어버리기....
+		//참고자료는 https://chobopark.tistory.com/36 여기서 두번쨰 방법과 
+		//https://lsk925.tistory.com/32 Responsebody가 중요한 이유를 설명해주는 자료....
 		for (int i = 0; i < reviewList.size(); i++) {
 			map = new HashMap<>();
 			vo = (ReviewVo) reviewList.get(i);
@@ -101,6 +111,12 @@ public class StoreViewController {
 		}
 		return list;
 	}
-
-	
+//깔끔히 끝나면좋겠다...4/28
+	@RequestMapping(value = "GPSlocation")
+	public String GPSlocationController(Model model) {
+		List<StoreVo> Addresslist = myStoreDao.selectAllAddress();
+		System.out.println(Addresslist);
+		model.addAttribute("GPS", Addresslist);
+		return "GPSlocation";
+	}
 }

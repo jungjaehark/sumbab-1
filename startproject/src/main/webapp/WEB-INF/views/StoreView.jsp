@@ -7,11 +7,14 @@
 <head>
 <meta charset="UTF-8">
 <title>상세화면페이지</title>
+<!-- 하단 제이쿼리를 위해.. -->
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-latest.js"></script>
 <%@ include file="/WEB-INF/views/shareHead.jsp"%>
 
+
 <style type="text/css">
+<!-- 지도 api 위치 꼴뵈기 싫어서 -->
 .topcorner {
 	position: absolute;
 	top: 0;
@@ -102,12 +105,20 @@ body {
 		</c:forEach>
 	</div>
 
-	<c:forEach var="cnt" begin="1" end="${totalCount }" step="1">
+	<c:forEach var="cnt" begin="1" end="${totalCount}" step="1">
 		<a href="javascript:goPaging(${storeNum}, ${cnt });">${cnt }</a>
 	</c:forEach>
 
+
+	<!--  ajax로 데이터를 받고 페이징 처리할것이다 앞서 헀던 컨트롤러에서 responsebody가 붙은 ajax요청전용 컨트롤러를 통해 데이터가 ajax로 전달됨
+	아무래도 url이나 type,dataType부분을 ajax선언할때 신경을 많이써야하는것 같다.. 컨트롤러에서도 json은 기본적으로 String형으로 데이터를 받는다는데 컨트롤러에서도 
+	object로 때렸다가 오류가나서 고생한것을 잊지말자......
+	
+	위에 jstl foreach에 있는 테이블에 ajax가 데이터를 하나씩 전해주는 느낌? 으로 이해하고있다..존나 어렵다,, 
+	위 테이블 형식과 동일한 제이쿼리 테이블을 append() 함수를 이용해서 추가 대가리깨진다.....
+	이미지 부분은 추후에 샘플데이터가 더 추가되면 테스트해볼예정.. 신고하기기능도 마찬가지.... 
+	따로 페이징을 동적으로 할것은아니여서 let num과 같은변수는 생략...goPaging()함수안에 ajax가 관건,,,-->
 	<script>
-	let num = 10;
 	function goPaging(storeNum, pageNo) {
 		$.ajax({
 			url:"/project/StoreView2/" + storeNum + "/" + pageNo,
@@ -142,7 +153,8 @@ body {
 	}
 	
 	</script>
-
+<!--  나중에 신고하기 기능이 다나오면 아래에 신고하기 함수 는 주석 풀고 테스트해볼예정,,,, -->
+	
 	<!-- function warning(storeNum) {
 		alert(storeNum);
 	}
@@ -152,6 +164,9 @@ body {
 	atag.button("신고하기"); -->
 	
 	
+	
+	<!-- 팀장님과 쇼부친결과 근처지역 맛집추천 및 카페 추천 부분은 페이징없이 화면출력도 가게이름과 위치만나오고 가게이름을 누르면 해당 스토어 상세보기로 넘어가도록
+	매우 간결하게 흘러감 -->
 	<div id="nbsCafeList"
 		class="bottomright">
 		<h2>
@@ -185,6 +200,8 @@ body {
 			</table>
 		</c:forEach>
 	</div>
+	
+	<!-- 주변 맛집 도 위에 주변카페와마찬가지로!!! -->
 	<h1>
 		${storelist.name} 주변 맛집<br>
 	</h1>
@@ -218,7 +235,7 @@ body {
 		</c:forEach>
 	</div>
 	
-
+	<!-- 기본 지도 api 위에 ${storelist.addess}를 스크립트단에서 따로 변수로 선언해서 geocoder.addressSearch에 박제!!!!!!!!!!!!! -->
 	<div id="map" class="topcorner"
 		style="width: 30%; height: 250px; float: left;"></div>
 	<script type="text/javascript"

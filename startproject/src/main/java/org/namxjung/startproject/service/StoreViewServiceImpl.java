@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class StoreViewServiceImpl implements StoreViewService {
 	@Autowired
 	private StoreDao myTestDao;
-
+//서비스는 비교적한산한 편인듯싶다...
 	public void setMyBoardDao(StoreDao myTestDao) {
 		this.myTestDao = myTestDao;
 	}

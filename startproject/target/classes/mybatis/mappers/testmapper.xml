@@ -9,6 +9,7 @@
 		SELECT * FROM STORE
 	</select>
 
+	<!-- 사실상 ,jdbcType=VARCHAR필요없음 만약에 null값이 들어간다면 그때 오류방지용이라고 구글에서 보긴했는데... -->
 	<select id="selectOne" parameterType="Integer"
 		resultType="org.namxjung.startproject.persistence.StoreVo">
 		SELECT count(*) over() as totalcount, name, address,
@@ -18,7 +19,8 @@
 		store WHERE store_num =
 		#{store_num,jdbcType=VARCHAR}
 	</select>
-<!--  -->
+
+	<!--제일 기분좋은 부분,,,정말 깔끔한 서브쿼리같다... -->
 	<select id="nearbycafe" parameterType="Integer"
 		resultType="org.namxjung.startproject.persistence.StoreVo">
 		SELECT * FROM store
@@ -42,7 +44,9 @@
 	<!-- =================================================== -->
 	<!-- 리뷰 테이블 부분 -->
 
-  
+
+
+	<!-- 처음 dao에 selectReview를 만들때...resultMap선언했음... -->
 	<resultMap
 		type="org.namxjung.startproject.persistence.ReviewVo" id="ReviewMap">
 		<id column="review_num" property="reviewNum" />
@@ -53,6 +57,10 @@
 		<id column="picture" property="picture" />
 	</resultMap>
 
+	<!-- 조금애먹은부분...사실상 파티션바이나 오더바이나 또이또이 같긴한데...아무래도 리뷰테이블안에 스토어넘으로 딸려올 게시물정보들을 
+		정렬할 값이없어서...강사님 페이징자료 보면 나오는 deptno등등 사실 그게 편하긴한듯 컬럼이없어서.. StoreDaomybatisImpl에서 
+		selectReview를 보면서 이해하는게 빠르다..예를들어 문법은 참고자료 https://javaexpert.tistory.com/503정리 
+		존나 잘되있음... -->
 	<select id="selectReviews" parameterType="map"
 		resultMap="ReviewMap">
 		SELECT *
@@ -73,7 +81,7 @@
 		BETWEEN #{startNum} AND #{endNum}
 	</select>
 
-
+ 	<!-- 뽑아져나온 전체 리뷰수를 알아야 페이지 수를 정하니까 reviewCount함 -->
 	<select id="reviewCount" parameterType="java.lang.Integer"
 		resultType="java.lang.Integer">
 		SELECT COUNT(*) AS CNT
@@ -102,7 +110,14 @@
 		WHERE RNUM
 		BETWEEN #{startNum} AND #{endNum}
 	</select>
+	
+	<!-- 이부분은 아직까지는 감은안오는데 잘못하면 mapper에서 제일 골때리는 부분이 되지 않을까 싶다..
+	제발 한번에 넘어가길.. -->
 	<!-- 지역추천을 위한 -->
+	<select id="selectAllAddress"
+		resultType="org.namxjung.startproject.persistence.StoreVo">
+		SELECT name, address FROM STORE
+	</select>
 
 
 

@@ -6,7 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>리스트</title>
-
+<style>
+.topcorner {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+</style>
 <%@ include file="/WEB-INF/views/shareHead.jsp"%>
 </head>
 <body>
@@ -17,7 +23,10 @@
 				href="<c:url value = "/StoreView/${list.store_num}" />">${list.name}<br></a>
 
 		</c:forEach>
+
 	</form>
 
+	<a href="<c:url value = "/GPSlocation"/>" class="topcorner">현재 내위치에서
+		근방 맛집보기</a>
 </body>
 </html>

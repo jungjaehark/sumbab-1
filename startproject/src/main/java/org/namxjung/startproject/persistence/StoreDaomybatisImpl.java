@@ -46,15 +46,13 @@ public class StoreDaomybatisImpl implements StoreDao {
 		System.out.println(store_num);
 
 		Map<String, Integer> map = new HashMap<>();
-
-		/*
-		 * 기본 페이징 기법 -- PAGE_NO가 1일 때 1 ~ 5, 2일 때 6 ~ 10 -- 1 - 1 * 5 + 1을 하면 1일때는 1이
-		 * 나오고 2일때는 2 - 1 * 5 + 1이니까 1 * 5 + 1이면 6 구글링으로,,,,,
-		 */
-		// 예를들어 게시물의
+		//기본페이징기법....게시물수 조정하고 싶으면 이부분을 건드리도록.....
+		//결론적으로 1페이지당 5개의 개시물 만약 추가 게시물이 6개면 페이지넘은2가되는....
 		int startNum = (page_num - 1) * 5 + 1;
 		int endNum = page_num * 5;
-
+			//추후에 결정될 page_num에따라 달라지는 startNum과 endNum
+		//store_num, starNum, endNum......다 map에 떄려박고,,,,parameterType이 map인 sql문...
+		
 		map.put("store_num", store_num);
 		map.put("startNum", startNum);
 		map.put("endNum", endNum);
@@ -62,7 +60,7 @@ public class StoreDaomybatisImpl implements StoreDao {
 		return sqlSession.selectList("selectReviews", map);
 	}
 
-	// 위와 같이
+	// 컨틀롤러에서 사용될 selectReviewPaging.............mapper도 존나 짜증난다...
 	@Override
 	public List<Map<String, Object>> selectReviewsPaging(int store_num, int page_num) {
 		System.out.println("리뷰 셀렉 실행확인");
@@ -81,6 +79,11 @@ public class StoreDaomybatisImpl implements StoreDao {
 	@Override
 	public int getReviewCount(int storeNum) {
 		return sqlSession.selectOne("reviewCount", storeNum);
+	}
+
+	@Override
+	public List<StoreVo> selectAllAddress() {
+		return sqlSession.selectList("selectAllAddress");
 	}
 
 }
