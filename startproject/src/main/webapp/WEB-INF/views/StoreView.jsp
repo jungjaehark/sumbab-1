@@ -1,5 +1,7 @@
+  
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,22 +17,18 @@
 	top: 0;
 	right: 0;
 }
-
 .bottomright {
 	position: absolute;
 	bottom: 100;
 	right: 0;
 }
-
 table, th, td {
 	border-collapse: collapse;
 	border: 1px solid black;
 }
-
 th, td {
 	padding: 5px
 }
-
 body {
 	margin: 0px;
 	padding: 0px;
@@ -49,7 +47,8 @@ body {
 	<table id="storeInfo">
 		<tr>
 			<th>위치:</th>
-			<td style="word-break: break-all">&nbsp;${storelist.address}</td>
+			<td style="word-break: break-all">&nbsp;${storelist.citycode}
+			&nbsp;${storelist.districtcode}&nbsp;${storelist.address}</td>
 		</tr>
 		<tr>
 			<th>전화번호:</th>
@@ -82,9 +81,7 @@ body {
 			<table class="reviewInfo">
 				<tr>
 					<th>작성자:</th>
-					<td width="500" style="word-break: break-all">&nbsp;${Reviewlist.id}<a
-						href==
-						"script:warning(${Reviewlist.reviewNum})" style="float: right"></a>신고하기<br>
+					<td width="500" style="word-break: break-all">&nbsp;${Reviewlist.id}<br>
 					</td>
 				</tr>
 				<tr>
@@ -143,30 +140,35 @@ body {
 			}
 		});
 	}
-	function warning(storeNum) {
+	
+	</script>
+
+	<!-- function warning(storeNum) {
 		alert(storeNum);
 	}
 	const atag = $("<a>");
 	atag.on('click', () => warning(1));
 	atag.attr("style", "float: right")
-	atag.button("신고하기");
-	</script>
-
+	atag.button("신고하기"); -->
+	
+	
 	<div id="nbsCafeList"
 		class="bottomright">
-		<h1>
+		<h2>
 			${storelist.name} 주변 카페<br>
-		</h1>
+		</h2>
 		<c:forEach items="${nbsCafe}" var="nbsCafe">
 			<table class="nbsInfo">
 				<tr>
-					<th>위치:</th>
-					<td style="word-break: break-all">&nbsp;${nbsCafe.address}</td>
+					<th>가게이름:</th>
+					<td style="word-break: break-all"><a href="<c:url value = "/StoreView/${nbsCafe.store_num}" />">&nbsp;${nbsCafe.name}</td>
 				</tr>
 				<tr>
-					<th>전화번호:</th>
-					<td style="word-break: break-all">&nbsp;${nbsCafe.phone}</td>
+					<th>위치:</th>
+					<td style="word-break: break-all">&nbsp;${nbsCafe.citycode}&nbsp;
+					${nbsCafe.districtcode}&nbsp;${nbsCafe.address}</td>
 				</tr>
+				<!-- 
 				<tr>
 					<th>메뉴:</th>
 					<td style="word-break: break-all">&nbsp;${nbsCafe.menu}</td>
@@ -179,6 +181,7 @@ body {
 					<th>특이사항:</th>
 					<td style="word-break: break-all">&nbsp;${nbsCafe.etc}</td>
 				</tr>
+				 -->
 			</table>
 		</c:forEach>
 	</div>
@@ -189,13 +192,15 @@ body {
 		<c:forEach items="${nbsRestaurant}" var="nbsRestaurant">
 			<table class="nbsInfo">
 				<tr>
-					<th>위치:</th>
-					<td style="word-break: break-all">&nbsp;${nbsRestaurant.address}</td>
+					<th>가게이름:</th>
+					<td style="word-break: break-all"><a href="<c:url value = "/StoreView/${nbsRestaurant.store_num}" />">&nbsp;${nbsRestaurant.name}</td>
 				</tr>
 				<tr>
-					<th>전화번호:</th>
-					<td style="word-break: break-all">&nbsp;${nbsRestaurant.phone}</td>
+					<th>위치:</th>
+					<td style="word-break: break-all">&nbsp;${nbsRestaurant.citycode}&nbsp;
+					${nbsRestaurant.districtcode}&nbsp;${nbsRestaurant.address}</td>
 				</tr>
+				<!-- 
 				<tr>
 					<th>메뉴:</th>
 					<td style="word-break: break-all">&nbsp;${nbsRestaurant.menu}</td>
@@ -206,12 +211,13 @@ body {
 				</tr>
 				<tr>
 					<th>특이사항:</th>
-					<td style="word-break: break-all">&nbsp;$nbsRestaurant.etc}</td>
+					<td style="word-break: break-all">&nbsp;${nbsRestaurant.etc}</td>
 				</tr>
+				 -->
 			</table>
 		</c:forEach>
 	</div>
-	s
+	
 
 	<div id="map" class="topcorner"
 		style="width: 30%; height: 250px; float: left;"></div>

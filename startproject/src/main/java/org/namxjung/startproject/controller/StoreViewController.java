@@ -75,13 +75,19 @@ public class StoreViewController {
 	@RequestMapping(value = "StoreView2/{store_num}/{page_num}", method = RequestMethod.GET)
 	public @ResponseBody List<Map<String, String>> boardPaging(@PathVariable int store_num,
 			@PathVariable int page_num) {	
+		
 		List<Map<String, Object>> reviewList = myStoreDao.selectReviewsPaging(store_num, page_num);
 		int totalCount = myStoreDao.getReviewCount(store_num);
+		
 		System.out.println("totalCount = " + totalCount);
 		System.out.println(reviewList);
+		
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		
 		Map<String, String> map = null;
+		
 		ReviewVo vo = null;
+		
 		for (int i = 0; i < reviewList.size(); i++) {
 			map = new HashMap<>();
 			vo = (ReviewVo) reviewList.get(i);
@@ -96,4 +102,5 @@ public class StoreViewController {
 		return list;
 	}
 
+	
 }

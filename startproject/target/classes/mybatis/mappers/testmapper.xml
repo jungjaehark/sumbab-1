@@ -18,7 +18,7 @@
 		store WHERE store_num =
 		#{store_num,jdbcType=VARCHAR}
 	</select>
-
+<!--  -->
 	<select id="nearbycafe" parameterType="Integer"
 		resultType="org.namxjung.startproject.persistence.StoreVo">
 		SELECT * FROM store
@@ -41,6 +41,8 @@
 
 	<!-- =================================================== -->
 	<!-- 리뷰 테이블 부분 -->
+
+  
 	<resultMap
 		type="org.namxjung.startproject.persistence.ReviewVo" id="ReviewMap">
 		<id column="review_num" property="reviewNum" />
@@ -50,7 +52,6 @@
 		<id column="regdate" property="regdate" />
 		<id column="picture" property="picture" />
 	</resultMap>
-
 
 	<select id="selectReviews" parameterType="map"
 		resultMap="ReviewMap">
