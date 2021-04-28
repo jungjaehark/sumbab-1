@@ -36,7 +36,8 @@
 		SELECT * FROM store
 		WHERE districtcode
 		=(SELECT districtcode
-		FROM store WHERE store_num = #{store_num}) and classify = '음식점'
+		FROM store WHERE 
+		store_num = #{store_num}) and classify = '음식점'
 
 	</select>
 
@@ -114,6 +115,12 @@
 	<!-- 이부분은 아직까지는 감은안오는데 잘못하면 mapper에서 제일 골때리는 부분이 되지 않을까 싶다..
 	제발 한번에 넘어가길.. -->
 	<!-- 지역추천을 위한 -->
+	<resultMap
+		type="org.namxjung.startproject.persistence.StoreVo" id="StoreMap">
+		<id column="address" property="address" />
+		<id column="name" property="name" />
+	</resultMap>
+	
 	<select id="selectAllAddress"
 		resultType="org.namxjung.startproject.persistence.StoreVo">
 		SELECT name, address FROM STORE

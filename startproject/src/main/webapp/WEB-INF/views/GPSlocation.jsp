@@ -50,7 +50,10 @@ jstl 데이터 스트립트에서 받는 방법 나와있음
 		for (var i = 0; i < addressArray.length; i++) {
 			geocoder
 					.addressSearch(
+							//addressArray 배열의 i번 인덱스를 서치하는것 과 추가로 function(result, status, data) 함수 추가 
+							//제일 궁금하고 의아한 부분 result 
 							addressArray[i],
+							
 							function(result, status, data) {
 
 								// 정상적으로 검색이 완료됐으면 

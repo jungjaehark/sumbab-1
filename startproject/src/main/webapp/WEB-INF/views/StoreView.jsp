@@ -176,7 +176,7 @@ body {
 			<table class="nbsInfo">
 				<tr>
 					<th>가게이름:</th>
-					<td style="word-break: break-all"><a href="<c:url value = "/StoreView/${nbsCafe.store_num}" />">&nbsp;${nbsCafe.name}</td>
+					<td style="word-break: break-all"><a href="<c:url value = "/StoreView/${nbsCafe.store_num}" />">&nbsp;${nbsCafe.name}</a></td>
 				</tr>
 				<tr>
 					<th>위치:</th>
@@ -210,7 +210,7 @@ body {
 			<table class="nbsInfo">
 				<tr>
 					<th>가게이름:</th>
-					<td style="word-break: break-all"><a href="<c:url value = "/StoreView/${nbsRestaurant.store_num}" />">&nbsp;${nbsRestaurant.name}</td>
+					<td style="word-break: break-all"><a href="<c:url value = "/StoreView/${nbsRestaurant.store_num}" />">&nbsp;${nbsRestaurant.name}</a></td>
 				</tr>
 				<tr>
 					<th>위치:</th>
@@ -235,9 +235,9 @@ body {
 		</c:forEach>
 	</div>
 	
-	<!-- 기본 지도 api 위에 ${storelist.addess}를 스크립트단에서 따로 변수로 선언해서 geocoder.addressSearch에 박제!!!!!!!!!!!!! -->
-	<div id="map" class="topcorner"
-		style="width: 30%; height: 250px; float: left;"></div>
+	
+	<div id="map" class=".topcorner"
+		style="width: 30%; height: 250px; float: right;"></div>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c771ec3c7832fcdda8a8784dd25a4cb4&libraries=services"></script>
 	<script>
