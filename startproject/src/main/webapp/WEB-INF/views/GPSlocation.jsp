@@ -19,23 +19,20 @@ jstl 데이터 스트립트에서 받는 방법 나와있음
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c771ec3c7832fcdda8a8784dd25a4cb4&libraries=services"></script>
 	<script>
-		var mapContainer = document.getElementById('map'); // 지도를 표시할 div  
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 
 		mapOption = {
-			center : new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표 
-			level : 7
-		// 지도의 확대 레벨
+			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			level : 10
+		// 지도의 확대 레벨 
 		};
-
-		var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 		var geocoder = new daum.maps.services.Geocoder();
 
 		var addressArray = [];
 
 		var nameArray = [];
-	//원초적인 실수(?) 사고방식의 고정관념(?) 왜 항상 아직도 jstl관련 부분을 먼저 jsp에서 만들고 스크립트단으로 넘겨야만 사용가능하다는 
-	//븅신같은 생각을할까.... 걍 jstl을 스크립트 바로때리면 되는데 아무래도 jstl이건 자바스크립트건 제이쿼리건 다 너무 내가 분리해서 생각하는것 같다...
+
 		<c:forEach items="${GPS}" var="GPS">
 		//일단은 어찌될지 모르니 nameArray까지 만들어서 push()로 값을 넣어주기....나중에 방법을 찾아보면 뭐 이름출력하는데 도움되지않을까..아님말고,,,
 		//뭔가 내 느낌상은 차라리 그냥 키값 : 밸류값 으로 배열을 많들어서 값을 이름과 주소같이 나오게 하면 될것도 같은데...항상 오류가 난다.. 백타 for문에서 .size만큼반복문이 
@@ -47,58 +44,59 @@ jstl 데이터 스트립트에서 받는 방법 나와있음
 
 		</c:forEach>
 
-		for (var i = 0; i < addressArray.length; i++) {
-			geocoder
-					.addressSearch(
-							//addressArray 배열의 i번 인덱스를 서치하는것 과 추가로 function(result, status, data) 함수 추가 
-							//제일 궁금하고 의아한 부분 result 
-							addressArray[i],
-							
-							function(result, status, data) {
+		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-								// 정상적으로 검색이 완료됐으면 
-								if (status === daum.maps.services.Status.OK) {
+		// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+		if (navigator.geolocation) {
 
-									var coords = new daum.maps.LatLng(
-											result[0].y, result[0].x);
+			// GeoLocation을 이용해서 접속 위치를 얻어옵니다
+			navigator.geolocation.getCurrentPosition(function(position) {
 
-									// 결과값으로 받은 위치를 마커로 표시합니다
-									var marker = new daum.maps.Marker({
-										map : map,
-										position : coords
-									});
+				var lat = position.coords.latitude, // 위도
+				lon = position.coords.longitude; // 경도
 
-									// 마커를 지도에 표시합니다.
-									marker.setMap(map);
+				var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+				message = '<div style="padding:5px;">현재 내 위치입니다!</div>'; // 인포윈도우에 표시될 내용입니다
 
-									//=====================================================================================================================================
-									//위에까지는 모든 주소값들 마커에 집어넣기 완료
-									//아래부터는 생성된 마커에 이름을 넣어야 하는데,,,,,,,,
-									//이전에 사용한 주소로 마커하나표시하는 기본지도 api에서 인포윈도우 따왔으나 안되는구나...
-									//	+ result[0].name_name 따라해봄 근데 undefined뜸 충격적...
+				// 마커와 인포윈도우를 표시합니다
+				displayMarker(locPosition, message);
 
-									//어떻게든 컨텐츠에 가게이름+주소나오게바꾸어보자.....
-									
-									//4/28일 목표 마커에 가게이름 과 주소 이쁘게 나오게  하고...gps를 지금 만들고있는 이 map안에 때려박자...제발좀...
+			});
 
-									var content = '<div class ="labelWish"><span class="leftWish"></span><span class="centerWish">'
-											+ result[0].address_name
-											+ '</span><span class="rightWish"></span></div>';
+		} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
 
-									// 커스텀 오버레이를 생성합니다
-									var customOverlay = new daum.maps.CustomOverlay(
-											{
-												position : coords,
-												content : content
-											});
+			var locPosition = new kakao.maps.LatLng(33.450701, 126.570667), message = 'geolocation을 사용할수 없어요..'
 
-									// 커스텀 오버레이를 지도에 표시합니다
-									customOverlay.setMap(map);
+			displayMarker(locPosition, message);
+		}
 
-									// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-									map.setCenter(coords);
-								}
-							});
+	
+		
+		
+		
+		// 지도에 마커와 인포윈도우를 표시하는 함수입니다
+		function displayMarker(locPosition, message) {
+
+			// 마커를 생성합니다
+			var marker = new kakao.maps.Marker({
+				map : map,
+				position : locPosition
+			});
+
+			var iwContent = message, // 인포윈도우에 표시할 내용
+			iwRemoveable = true;
+
+			// 인포윈도우를 생성합니다
+			var infowindow = new kakao.maps.InfoWindow({
+				content : iwContent,
+				removable : iwRemoveable
+			});
+
+			// 인포윈도우를 마커위에 표시합니다 
+			infowindow.open(map, marker);
+
+			// 지도 중심좌표를 접속위치로 변경합니다
+			map.setCenter(locPosition);
 		}
 	</script>
 
