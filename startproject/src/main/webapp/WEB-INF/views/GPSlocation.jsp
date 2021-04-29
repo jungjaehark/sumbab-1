@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <title>내 위치 주변 맛집과 카페</title>
 <!-- 
-1.컨트롤러에서 전달된 모델값을 스크립트 받기 
+1.컨트롤러에서 전달된 모델값을 스크립트에서 받기 
 2.마커생성 함수 부분에서 for문돌려 마커여럿생성
 3.gps api사용
 4.합체
@@ -160,7 +160,6 @@ https://epthffh.tistory.com/entry/Javascript-%EC%97%90%EC%84%9C-JSTL-%EC%82%AC%E
 										// 커스텀 오버레이를 지도에 표시합니다
 										customOverlay.setMap(map);
 
-										
 									}
 								});
 			}
@@ -185,7 +184,7 @@ https://epthffh.tistory.com/entry/Javascript-%EC%97%90%EC%84%9C-JSTL-%EC%82%AC%E
 	문제점2: 생성된 마커들에 주소만 나오고 가게이름은 안나온다. 어떻게든 content부분을 수정하여 가게이름 + 주소가 나오게끔 만들자
 	
 	문제점3: 기능을 실행하면 지도가 흘들리면서 마커와 내위치 가 동시에 생성되는 충돌부분
-	해결함:  CreateMakers()의 map.setCenter(coords); 지움 두가지 api의 map.setCenter()함수가 충돌하면서 생기는 부분같은 결과론적으로 gps api에 maker를 생성하는것을 덧붙이는것이고
+	해결함:  CreateMakers()의 map.setCenter(coords); 지움 두가지 api의 map.setCenter()함수가 충돌하면서 생기는 부분같은데 결과론적으로 gps api에 maker를 생성하는것을 덧붙이는것이고
 	우리가 원하는 기능은 내 위치 기준이니 내위치의 map.setCenter()함수만 남겨둔다
 	
 	
