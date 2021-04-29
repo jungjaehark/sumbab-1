@@ -5,7 +5,14 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>geolocation으로 마커 표시하기</title>
+<title>내 위치 주변 맛집과 카페</title>
+<!-- 
+1.컨트롤러에서 전달된 모델값을 스크립트 받기 
+2.마커생성 함수 부분에서 for문돌려 마커여럿생성
+3.gps api사용
+4.합체
+ -->
+
 <!--https://sol-study.tistory.com/3 마커여러개 생성 참고자료
 ======================================================================================================================================================
 https://epthffh.tistory.com/entry/Javascript-%EC%97%90%EC%84%9C-JSTL-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EC%99%80-%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD 
@@ -14,12 +21,12 @@ https://epthffh.tistory.com/entry/Javascript-%EC%97%90%EC%84%9C-JSTL-%EC%82%AC%E
 </head>
 <body>
 
-<!-- 아래 api를 사용할려면 카카오 개발자 센터에서 키값을 할당받아 등록해야함 -->
+	<!-- 아래 api를 사용할려면 카카오 개발자 센터에서 키값을 할당받아 등록해야함 -->
 	<div id="map" style="width: 30%; height: 250px; float: center;"></div>
 
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c771ec3c7832fcdda8a8784dd25a4cb4&libraries=services"></script>
-	
+
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 
@@ -30,7 +37,6 @@ https://epthffh.tistory.com/entry/Javascript-%EC%97%90%EC%84%9C-JSTL-%EC%82%AC%E
 		};
 
 		var geocoder = new daum.maps.services.Geocoder();
-
 
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
@@ -81,7 +87,7 @@ https://epthffh.tistory.com/entry/Javascript-%EC%97%90%EC%84%9C-JSTL-%EC%82%AC%E
 
 			// 지도 중심좌표를 접속위치로 변경합니다
 			map.setCenter(locPosition);
-			
+
 			CreateMakers();
 		}
 		function CreateMakers() {
@@ -89,29 +95,29 @@ https://epthffh.tistory.com/entry/Javascript-%EC%97%90%EC%84%9C-JSTL-%EC%82%AC%E
 			var geocoder = new daum.maps.services.Geocoder();
 
 			//========================================================================================================================
-				//컨트롤러에서 전달받은 모델값을 이용해 그 데이터를 토대로 아래에서 for문을 돌려 addressSearch하여 나오는 위도 경도 위치에 
-				//마커를 생성할텐데 이전에는 항상 고정관념마냥 컨트롤러에서 전달받은 모델값은 스크립트단 외부에 jsp에서 jstl forEach태그를 통해 
-				//전달받고 그다음 스크립트단으로 넣을려고했는데 그냥 스크립트단에서 바로 forEach태그를 때려도 스크립트단에 전달이 된더라!
-				//그것을 담을 var addressArray[]를 먼저 생성하고 .push()함수를 통해 값을 넣어준다.
+			//컨트롤러에서 전달받은 모델값을 이용해 그 데이터를 토대로 아래에서 for문을 돌려 addressSearch하여 나오는 위도 경도 위치에 
+			//마커를 생성할텐데 이전에는 항상 고정관념마냥 컨트롤러에서 전달받은 모델값은 스크립트단 외부에 jsp에서 jstl forEach태그를 통해 
+			//전달받고 그다음 스크립트단으로 넣을려고했는데 그냥 스크립트단에서 바로 forEach태그를 때려도 스크립트단에 전달이 된더라!
+			//그것을 담을 var addressArray[]를 먼저 생성하고 .push()함수를 통해 값을 넣어준다.
 			var addressArray = [];
 
 			var nameArray = [];
 
 			<c:forEach items="${GPS}" var="GPS">
-		
+
 			addressArray.push("${GPS.address}");
 
 			nameArray.push("${GPS.name}");
 
 			</c:forEach>
 			//=========================================================================================================================
-				//값이 채워진 addressArray의 length만큼 for문을돌려 addressSearch하여 
-				//var marker = new daum.maps.Marker({
-											//map : map,
-											//position : coords
-										//});
+			//값이 채워진 addressArray의 length만큼 for문을돌려 addressSearch하여 
+			//var marker = new daum.maps.Marker({
+			//map : map,
+			//position : coords
+			//});
 			//위와같이 마커생성하여 	marker.setMap(map); 맵에 set하는 부분까지
-			
+
 			for (var i = 0; i < addressArray.length; i++) {
 				geocoder
 						.addressSearch(
