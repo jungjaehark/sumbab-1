@@ -32,7 +32,7 @@ https://epthffh.tistory.com/entry/Javascript-%EC%97%90%EC%84%9C-JSTL-%EC%82%AC%E
 
 		mapOption = {
 			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-			level : 10
+			level : 5
 		// 지도의 확대 레벨 
 		};
 
@@ -180,9 +180,15 @@ https://epthffh.tistory.com/entry/Javascript-%EC%97%90%EC%84%9C-JSTL-%EC%82%AC%E
 			83행의 CreateMakers(); 부분이 마커생성 api부분을 호출하는 부분이다.
 	================================================================================================================================================================
 	문제점1: 기능을 실행하면 내위치가 먼저 나와야하는데 전체 마커+내위치부분을 포함한 서울전체 지역이 나온다 이부분을 실행하자마자 바로 내위치 먼저 나오게끔 수정하자
-	해결함: 	map.setCenter(locPosition); 후에 호출될 CreateMakers()함수에서 map.setCenter(coodrs); 지움 , 두개의 api를 합치다보니 중복되는 부분 컨트롤이 중요하다.
+	해결함:  지도의 확대 레벨을 10 에서 5로 수정
 	
 	문제점2: 생성된 마커들에 주소만 나오고 가게이름은 안나온다. 어떻게든 content부분을 수정하여 가게이름 + 주소가 나오게끔 만들자
+	
+	문제점3: 기능을 실행하면 지도가 흘들리면서 마커와 내위치 가 동시에 생성되는 충돌부분
+	해결함:  CreateMakers()의 map.setCenter(coords); 지움 두가지 api의 map.setCenter()함수가 충돌하면서 생기는 부분같은 결과론적으로 gps api에 maker를 생성하는것을 덧붙이는것이고
+	우리가 원하는 기능은 내 위치 기준이니 내위치의 map.setCenter()함수만 남겨둔다
+	
+	
 	 -->
 </body>
 </html>
