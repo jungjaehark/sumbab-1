@@ -59,8 +59,8 @@
 	</resultMap>
 
 	<!-- 조금애먹은부분...사실상 파티션바이나 오더바이나 또이또이 같긴한데...아무래도 리뷰테이블안에 스토어넘으로 딸려올 게시물정보들을 
-		정렬할 값이없어서...강사님 페이징자료 보면 나오는 deptno등등 사실 그게 편하긴한듯 컬럼이없어서.. StoreDaomybatisImpl에서 
-		selectReview를 보면서 이해하는게 빠르다..예를들어 문법은 참고자료 https://javaexpert.tistory.com/503정리 
+		정렬할 값이없어서...강사님 페이징자료 보면 나오는 기준점으로쓸만한컬럼등등 사실 그게 편하긴한듯 컬럼이없어서.. StoreDaomybatisImpl에서 
+		selectReview를 보면서 이해하는게 빠르다..문법은 참고자료 https://javaexpert.tistory.com/503정리 
 		존나 잘되있음... -->
 	<select id="selectReviews" parameterType="map"
 		resultMap="ReviewMap">
@@ -114,6 +114,7 @@
 	
 	<!-- 이부분은 아직까지는 감은안오는데 잘못하면 mapper에서 제일 골때리는 부분이 되지 않을까 싶다..
 	제발 한번에 넘어가길.. -->
+	<!-- 아직까지는 조용하게 넘어가는중 4/29 -->
 	<!-- 지역추천을 위한 -->
 	<resultMap
 		type="org.namxjung.startproject.persistence.StoreVo" id="StoreMap">

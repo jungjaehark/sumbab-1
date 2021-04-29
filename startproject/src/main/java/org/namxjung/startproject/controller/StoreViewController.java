@@ -112,6 +112,7 @@ public class StoreViewController {
 		return list;
 	}
 //깔끔히 끝나면좋겠다...4/28
+	//801%깔끔히 끝나는중....4/29
 	@RequestMapping(value = "GPSlocation")
 	public String GPSlocationController(Model model) {
 		List<StoreVo> Addresslist = myStoreDao.selectAllAddress();
